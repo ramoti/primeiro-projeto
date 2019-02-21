@@ -1,5 +1,3 @@
 # primeiro-projeto
 primeiro projeto de programação II
-foda-se
-
-
+carai velho negócio foda de faze
