@@ -9,4 +9,9 @@ def carai():
 def caramba():
     return render_template("adicionarpessoa.html")
 
-app.run()
+@app.route("/listapessoa")
+def caramb():
+    return render_template("listarpessoa.html")
+
+
+app.run(debug= True)
