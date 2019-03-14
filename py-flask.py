@@ -14,4 +14,4 @@ def caramb():
     return render_template("listarpessoa.html")
 
 
-app.run(debug= True)
+app.run(debug=True)
