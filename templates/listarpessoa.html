@@ -2,13 +2,14 @@
 <html>
     <title>listpessoa</title>
     <body>
-        <p>Lista de Pessoas </p>
+        <p>Lista de Pessoas: </p>
         <br></br>
-        <ol>
-            <li>Lary</li>
-            <li>Godi</li>
-            <li>Ramos</li>
-        </ol>
+        {% for pessoa in So_cara_foda: %}
+       <p>Nome: {{pessoa.nome}}</p><br></br>
+       <p>Idade: {{pessoa.idade}}</p><br></br>
+       <p>Nascimento: {{pessoa.nascimento}}</p><br></br>
+        {% endfor %}
+        
         <form action="/"><input type="submit" value="voltar ao inicio"/></form>
     </body> 
 </html>
