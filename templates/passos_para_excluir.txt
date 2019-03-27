@@ -1,0 +1,2 @@
+1- link pra cada pessoa para excluir, informar o nome da pessoa 
+2- criar uma ação de excluir, recebe o do site o nome da pessoa

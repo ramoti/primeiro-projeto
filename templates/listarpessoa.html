@@ -5,11 +5,15 @@
         <h1><b>Lista de Pessoas: </b></h1>
         <br></br>
         {% for pessoa in So_cara_foda: %}
-       <p>Nome: {{pessoa.nome}}</p>
+       <p>Nome: {{pessoa.nome}}
+           <a href="/deletepessoa?Nome={{pessoa.nome}}"> excluir</a>
+       </p>
        <p>Idade: {{pessoa.idade}}</p>
        <p>Nascimento: {{pessoa.nascimento}}</p><br></br>
         {% endfor %}
-        
+        <br></br>
+        <form action="/addpessoa"><input type="submit" value="voltar a adicionar"/></form>
+        <br></br>
         <form action="/"><input type="submit" value="voltar ao inicio"/></form>
     </body> 
 </html>
