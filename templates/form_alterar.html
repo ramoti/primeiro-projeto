@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <title>alterar-pessoa</title>
+    <body>
+        <p>Alterar Pessoa </p>
+        <br></br>
+        <form action= "/alterar_pessoa">
+        <p>Nome: <input type="text" name="Nome" value="{{pessoa.nome}}"></input></p>
+        <p>Idade: <input type="text" name="Idade" value="{{pessoa.idade}}"></p>
+        <p>Nascimento: <input type="text" name="Nascimento" value="{{pessoa.nascimento}}"></p>
+        <br></br>
+        <input type="hidden" name="Cpf" value="{{pessoa.cpf}}">
+        <input type="submit" value="enviar"/>
+        </form>
+        <br></br>
+        <br></br>
+        
+    </body> 
+</html>

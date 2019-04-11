@@ -52,5 +52,28 @@ def caramb3():
     return render_template("mensagem.html")
 
 
+@app.route("/form_alterar")
+def caramb4():
+
+    cpf= request.args.get("Cpf")
+    for pessoa in lista:
+        if cpf== pessoa.cpf:
+            return render_template("form_alterar.html", pessoa=pessoa)
+
+@app.route("/alterar_pessoa")
+def caramb5():
+
+    nome= request.args.get("Nome")
+    idade= request.args.get("Idade")
+    nasci= request.args.get("Nascimento")
+    cpf= request.args.get("Cpf")
+    pessoa_alterada= Pessoa(nome,idade,nasci,cpf)
+    for pessoa in range(len(lista)):
+        if cpf== lista[pessoa].cpf:
+            lista[pessoa]=pessoa_alterada
+            return render_template("pessoa_alterada.html")
+
+
+
 app.run(debug=True)
 
