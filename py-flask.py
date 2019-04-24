@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,session,redirect
 app= Flask(__name__)
 
 class Pessoa():
@@ -13,6 +13,18 @@ lista=[Pessoa("Piske",17,"12/09/2001","123.124.213-20"), Pessoa("Ravi",17,"16/07
 @app.route("/")
 def carai():
     return render_template("inicio.html")
+
+@app.route("/login_form")
+def cadas():
+    return render_template("login.html")
+
+@app.route("/login")
+def cadas2():
+    nome=request.args.get("Nome")
+    senha=request.args.get("Senha")
+    if nome=="Piske" and senha=="123":
+        session["usuario"]=nome
+        return redirect("/")
 
 @app.route("/addpessoa")
 def caramba():
@@ -73,7 +85,7 @@ def caramb5():
             lista[pessoa]=pessoa_alterada
             return render_template("pessoa_alterada.html")
 
-
+app.config[’SECRET KEY’] = ’43r907’
 
 app.run(debug=True)
 
