@@ -25,6 +25,13 @@ def cadas2():
     if nome=="Piske" and senha=="123":
         session["usuario"]=nome
         return redirect("/")
+    else:
+        return "sua senha ou/e nome podem estar ERRADOS"
+
+@app.route("/logout")
+def logout () :  
+    session.pop("usuario") 
+    return redirect("/")
 
 @app.route("/addpessoa")
 def caramba():
@@ -85,7 +92,6 @@ def caramb5():
             lista[pessoa]=pessoa_alterada
             return render_template("pessoa_alterada.html")
 
-app.config[’SECRET KEY’] = ’43r907’
-
+app.config["SECRET_KEY"] = "54321"
 app.run(debug=True)
 

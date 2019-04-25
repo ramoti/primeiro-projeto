@@ -9,6 +9,20 @@
     </style>
     </head>
     <body>
+        {% if session["usuario"]%}
+        <p>
+        <form action="/logout">
+        <input type="submit" value="LOGOUT">
+        </form>
+        </p>
+        {% else %}
+        <p>
+        <form action="/login_form">
+        <input type="submit" value="LOGIN">
+        </form>
+        </p>
+        {% endif %}
+        <br></br>
         <p>Salvar Pessoa </p>
         <br></br>
         <form action= "/listapessoa">

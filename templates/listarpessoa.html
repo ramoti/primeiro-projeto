@@ -9,14 +9,33 @@
     </style>
     </head>
     <body>
+        {% if session["usuario"]%}
+        <p>
+        <form action="/logout">
+        <input type="submit" value="LOGOUT">
+        </form>
+        </p>
+        {% else %}
+        <p>
+        <form action="/login_form">
+        <input type="submit" value="LOGIN">
+        </form>
+        </p>
+        {% endif %}
+        <br></br>
         <h1><b>Lista de Pessoas: </b></h1>
         <br></br>
         {% for pessoa in So_cara_foda: %}
         <p>Nome: {{pessoa.nome}}
+
+        {% if session["usuario"] %}   
         <form action="/deletepessoa">
         <input type="hidden" name="Cpf" value="{{pessoa.cpf}}">
         <input type="submit" value="excluir pessoa">
         </form>
+        {% endif %}
+
+
         <form action="/form_alterar">
         <input type="hidden" name="Cpf" value="{{pessoa.cpf}}">
         <input type="submit" value="alterar pessoa">
