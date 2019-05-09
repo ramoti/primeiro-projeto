@@ -8,7 +8,7 @@ class Pessoa():
         self.nascimento=nascimento
         self.cpf=cpf
 
-lista=[Pessoa("Piske",17,"12/09/2001","123.124.213-20"), Pessoa("Ravi",17,"16/07/2001","432.234.987.01")]
+lista=[Pessoa("Piske",17,"12/09/2001","123.124.213-20"), Pessoa("Ravi",17,"16/07/2001","432.234.987-01")]
 
 @app.route("/")
 def carai():
@@ -67,7 +67,6 @@ def caramb3():
     for pessoa in lista:
         if cpf== pessoa.cpf:
             lista.remove(pessoa)
-            break
     return render_template("mensagem.html")
 
 
@@ -89,7 +88,7 @@ def caramb5():
     pessoa_alterada= Pessoa(nome,idade,nasci,cpf)
     for pessoa in range(len(lista)):
         if cpf== lista[pessoa].cpf:
-            lista[pessoa]=pessoa_alterada
+            lista[pessoa] = pessoa_alterada
             return render_template("pessoa_alterada.html")
 
 app.config["SECRET_KEY"] = "54321"
