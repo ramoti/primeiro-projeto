@@ -1,36 +1,38 @@
-class Produto():
-    def __init__(self,nome_produto, valor_produto):
-        self.nome_produto= nome_produto
-        self.valor_produto= valor_produto
+import peewee, os
+
+db = peewee.SqliteDatabase ( ’ animalia.db’)
+
+class Animal(peewee.Model):
+
+    nomedono = peewee.CharField()
+    tipo animal = peewee.CharField ()
+    raca = peewee.CharField ()
+    class Meta:
+
+        database = db
+
+    def str ( self ) :
+        return self . tipo animal+”,”+ self . raca+” de ”+ self .nomedono
+
+class Consulta(peewee.Model):
+    data = peewee.CharField ()
+    servico = peewee.CharField ()
+    horario = peewee.CharField ()
+    confirma = peewee.CharField ()
+    myID = peewee.CharField()
+
+    class Meta:
+
+    database = db
+
+    def str ( self ) :
+        return self . servico +" em "+ self .data+": "+ self . horario+", confirmado: "+ "\n" self . confirma+”, ID da consulta : ”+ self .myID+” | animal: ”+str( self .animal)
 
 
-    
-class Item():
-    def __init__(self, produto, quantidade):
-        self.produto= produto
-        self.quantidade= quantidade
 
 
 
-class Carrinho():
 
-    def __init__(self, lista_itens):
-        self.lista_itens= lista_itens
-    
-    def mostra_carrinho(self):
-        print("_______LISTA________")
-        print()
-        val_total=0
-        num=0
-        for produto in self.lista_itens:
-            print(self.lista_itens[num].produto.nome_produto)
-            valor= self.lista_itens[num].produto.valor_produto * self.lista_itens[num].quantidade
-            val_total+= valor
-            num+=1
-            print("valor total do seu produto: ", valor)
-            print()
-        print()
-        print("valor total: ", val_total)
 
 if __name__ == "__main__":
     produto1= Produto("carne", 0.75)
