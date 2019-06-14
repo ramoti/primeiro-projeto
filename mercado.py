@@ -1,41 +1,71 @@
-class Produto():
-    def __init__(self,nome_produto, valor_produto):
-        self.nome_produto= nome_produto
-        self.valor_produto= valor_produto
+import peewee, os
+
+db = peewee.SqliteDatabase ("animalia.db")
+
+class Animal(peewee.Model):
+
+    nomedono = peewee.CharField()
+    tipo_animal = peewee.CharField ()
+    raca = peewee.CharField ()
+    class Meta:
+
+        database = db
+
+    def str ( self ) :
+        return self.tipo_animal+","+ self.raca+" de "+ self.nomedono
+
+class Consulta(peewee.Model):
+    data = peewee.CharField ()
+    servico = peewee.CharField ()
+    horario = peewee.CharField ()
+    confirma = peewee.CharField ()
+    myID = peewee.CharField()
+
+    class Meta:
+
+        database = db
+
+    def str ( self ) :
+        return self.servico+" em "+self.data+":"+self.horario+", confirmado: "+\
+        self.confirma+", ID da consulta: "+self.myID+" | animal: "+str(self.animal)
 
 
-    
-class Item():
-    def __init__(self, produto, quantidade):
-        self.produto= produto
-        self.quantidade= quantidade
 
 
 
-class Carrinho():
 
-    def __init__(self, lista_itens):
-        self.lista_itens= lista_itens
-    
-    def mostra_carrinho(self):
-        print("_______LISTA________")
-        print()
-        val_total=0
-        num=0
-        for produto in self.lista_itens:
-            print(self.lista_itens[num].produto.nome_produto)
-            valor= self.lista_itens[num].produto.valor_produto * self.lista_itens[num].quantidade
-            val_total+= valor
-            num+=1
-            print("valor total do seu produto: ", valor)
-            print()
-        print()
-        print("valor total: ", val_total)
 
 if __name__ == "__main__":
-    produto1= Produto("carne", 0.75)
-    produto2= Produto("batata doce", 3.50)
-    item= Item(produto1, 2)
-    item2= Item(produto2, 1.750)
-    carrinho= Carrinho([item,item2])
-    carrinho.mostra_carrinho()
+    
+    arq = 'animalia.db'
+    if os.path.exists(arq):
+        os.remove(arq)
+
+    try:
+       
+        db.connect()
+      
+        db.create_tables([Animal,Consulta]) 
+       
+    except peewee.OperationalError as e:
+        print("erro ao criar tabelas: "+str(e))
+
+    print("TESTE DO ANIMAL")
+    a1 = Animal(nomedono="José", tipo_animal="C", raca="Chiuaua")
+    print(a1)
+
+    print("TESTE DA CONSULTA")
+    c1 = Consulta(data="19/09/2018", servico="Consulta de rotina", 
+    horario="14:00", animal=a1, confirma="N", myID="c9d8f7gu4h3hnwsik3e")
+    print(c1)
+
+    print("TESTE DA PERSISTÊNCIA")
+    a1.save()
+    c1.save()
+    c2 = Consulta(data="21/09/2018", servico="Aplicação de vacina", 
+    horario="10:00", animal=a1, confirma="S", myID="d9firtu3434uit")
+    c2.save()
+    todos = Consulta.select()
+
+    for con in todos:
+        print(con) 
