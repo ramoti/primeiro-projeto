@@ -1,49 +1,46 @@
-import peewee, os
+import os
+from peewee import *
 
-db = peewee.SqliteDatabase()
+arq = 'many-to-many-com-lista.db'
+db = SqliteDatabase(arq)
 
-class Animal(peewee.Model):
-
-    nomedono = peewee.CharField()
-    animal = peewee.CharField ()
-    raca = peewee.CharField ()
-
+class BaseModel(Model):
     class Meta:
         database = db
+        
+class Aluno(BaseModel):
+    nome = CharField()
 
-    def __str__(self) :
-        return self.tipo_animal+ ","+ self.raca+","+self.nomedono+"."
+class Disciplina(BaseModel):
+    nome = CharField()
+    alunos = ManyToManyField(Aluno) 
 
 
-class Consulta(peewee.Model):
-
-    data = peewee.CharField ()
-    servico = peewee.CharField ()
-    horario = peewee.CharField ()
-    animal = peewee.ForeignKeyField(Animal)
-    confirma = peewee.CharField ()
-    myID = peewee.CharField()
-
-    class Meta:
-
-        database = db
-
-    class __st__(self):
-
-        return self.servico +"em"+self.data+":"+ self.horario+",confirmado:"+ "\n" self.confirma + ",ID da consulta: " + self.myID +"| animal: " + str(self.animal)
-
-if __name__ == "__main__":
-
-    arq= "animalia.db"
-    if os.path.exists(arq):
+if os.path.exists(arq):
         os.remove(arq)
-    
-    try:
 
-        db.connect()
-        db.create.tables([Animal,Consulta])
-    
-    except peewere.OperationalError as e:
-        print("erro ao criar tabelas: " + str(e))
+db.connect()
+db.create_tables([
+    Aluno,
+    Disciplina,
+    Disciplina.alunos.get_through_model()])
 
-print("TESTANTO")
+
+joao = Aluno.create(nome = "Joao da Silva")
+ingles = Disciplina.create(nome = 'Inglês')
+espanhol = Disciplina.create(nome = 'Espanhol')
+
+joao.disciplinas.add([ingles, espanhol])
+
+maria = Aluno.create(nome = 'Maria')
+espanhol.alunos.add(maria)
+
+todos = Disciplina.select()
+for disc in todos:
+    print("Quem cursa a disciplina:"+disc.nome)
+    for aluno in disc.alunos:
+         print(aluno.nome)
+
+print("Disciplinas de Joao:")
+for disciplina in joao.disciplinas:
+    print(disciplina.nome)
