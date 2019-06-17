@@ -1,14 +1,29 @@
 from flask import Flask,render_template,request,session,redirect
 app= Flask(__name__)
+from peewee import *
 
-class Pessoa():
-    def __init__(self,nome,idade,nascimento,cpf):
-        self.nome=nome
-        self.idade=idade
-        self.nascimento=nascimento
-        self.cpf=cpf
 
-lista=[Pessoa("Piske",17,"12/09/2001","123.124.213-20"), Pessoa("Ravi",17,"16/07/2001","432.234.987-01")]
+db = SqliteDatabase('lista_pessoa.db')
+
+class Pessoa(Model):
+
+    nome=CharField()
+    idade=CharField()
+    nascimento=CharField()
+    cpf=CharField()
+
+    class Meta:
+        database=db
+
+lista=[]
+
+try:
+        
+    db.connect()
+    db.create_tables([Pessoa]) 
+
+except OperationalError as e:
+    print("erro ao criar tabelas: "+str(e))
 
 
 
@@ -62,7 +77,7 @@ def caramba():
 @app.route("/listapessoa_sem_add")
 def caramb1():
 
-    return render_template("listarpessoa.html", So_cara_foda= lista)
+    return render_template("listarpessoa.html", So_cara_foda= Pessoa.select())
 
 
 
@@ -84,7 +99,7 @@ def caramb2():
                 return render_template("erro_add_pessoa.html")
         val=1
         
-    lista.append(Pessoa(nome,int(idade),nasci,cpf))
+    Pessoa.create(nome=nome,idade=idade,nascimento=nasci,cpf=cpf)
     return redirect( "/listapessoa_sem_add" )
 
 
